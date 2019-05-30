@@ -2,6 +2,7 @@ package com.kingde.atm;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_LOGIN = 100;
     boolean logon = false;
 
 
@@ -21,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if(!logon) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+//            startActivity(intent);
+            startActivityForResult(intent, REQUEST_LOGIN);
         }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -34,6 +37,16 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_LOGIN){
+            if(resultCode!=RESULT_OK){
+                finish();
+            }
+        }
     }
 
     @Override

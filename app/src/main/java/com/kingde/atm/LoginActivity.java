@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         String username = edUsername.getText().toString();
         String password = edPasswd.getText().toString();
         if("admin".equals(username) && "admin".equals(password)) {
+            setResult(RESULT_OK);
             finish();
         }
     }
