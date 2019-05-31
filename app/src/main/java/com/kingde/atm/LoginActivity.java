@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -15,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private EditText edUsername;
     private EditText edPasswd;
 
@@ -24,6 +26,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         findView();
 
+        String username = getSharedPreferences("atm", MODE_PRIVATE)
+                .getString("USERNAME", "");
+        Log.d(TAG, "onCreate: username " + username);
+        edUsername.setText(username);
     }
 
     private void findView() {
@@ -32,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        String username = edUsername.getText().toString();
+        final String username = edUsername.getText().toString();
         final String password = edPasswd.getText().toString();
         FirebaseDatabase.getInstance().getReference("users").child(username).child("password")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -41,6 +47,13 @@ public class LoginActivity extends AppCompatActivity {
                         String pwd = (String) dataSnapshot.getValue();
                         if(pwd.equals(password)) {
                             setResult(RESULT_OK);
+                            getSharedPreferences("atm", MODE_PRIVATE)
+                                    .edit()
+                                    .putString("USERNAME", username)
+                                    .commit();
+                            String username = getSharedPreferences("atm", MODE_PRIVATE)
+                                    .getString("USERNAME", "");
+                            Log.d(TAG, "login: username " + username);
                             finish();
                         } else {
                             new AlertDialog.Builder(LoginActivity.this)
