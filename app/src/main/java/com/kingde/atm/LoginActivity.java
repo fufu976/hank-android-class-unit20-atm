@@ -39,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
         edUsername = findViewById(R.id.username);
         edPasswd   = findViewById(R.id.passwd);
         cbRemember = findViewById(R.id.checkBox);
+        boolean bRemember = getSharedPreferences("atm", MODE_PRIVATE)
+                .getBoolean("REMEMBER_USERNAME", false);
+        cbRemember.setChecked(bRemember);
         cbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -48,9 +51,6 @@ public class LoginActivity extends AppCompatActivity {
                         .apply();
             }
         });
-        boolean bRemember = getSharedPreferences("atm", MODE_PRIVATE)
-                .getBoolean("REMEMBER_USERNAME", false);
-        cbRemember.setChecked(bRemember);
     }
 
     public void login(View view) {
