@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.kingde.atm.ViewHolder.FeatureViewHolder;
 
@@ -15,7 +14,7 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureViewHolder> {
     Context context;
 
     public FeatureAdapter(Context context) {
-        this.context = context;
+        this.context = context; //以這邊來說，就是拿到MainActivity.this這個context
         features = context.getResources().getStringArray(R.array.features);
     }
 
