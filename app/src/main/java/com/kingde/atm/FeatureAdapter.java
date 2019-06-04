@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureViewHolder> {
+import com.kingde.atm.ViewHolder.FeatureViewHolder;
+
+public class FeatureAdapter extends RecyclerView.Adapter<FeatureViewHolder> {
     private final String[] features;
     Context context;
 
@@ -23,25 +25,16 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureV
         View view = LayoutInflater.from(context).inflate(
                 android.R.layout.simple_list_item_1, viewGroup, false
         );
-        return new FeatureViewHolder(view);
+            return new FeatureViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FeatureViewHolder featureViewHolder, int i) {
-        featureViewHolder.nameText.setText(features[i]);
+        featureViewHolder.getNameText().setText(features[i]);
     }
 
     @Override
     public int getItemCount() {
         return features.length;
-    }
-
-    public class FeatureViewHolder extends RecyclerView.ViewHolder{
-        //Use a TextView in the ViewHolder to show the feature name
-        TextView nameText;
-        public FeatureViewHolder(@NonNull View itemView) {
-            super(itemView);
-            nameText = itemView.findViewById(android.R.id.text1);
-        }
     }
 }
